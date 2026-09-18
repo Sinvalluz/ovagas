@@ -11,12 +11,27 @@
   },
   "formatter": {
     "enabled": true,
-    "indentStyle": "space",
-    "indentWidth": 2
+    "attributePosition": "multiline",
+    "indentStyle": "tab",
+    "lineEnding": "crlf",
+    "indentWidth": 4,
+    "lineWidth": 120
   },
   "css": {
     "parser": {
       "tailwindDirectives": true
+    }
+  },
+  "javascript": {
+    "formatter": {
+      "quoteStyle": "single",
+      "jsxQuoteStyle": "single",
+      "semicolons": "always",
+      "trailingCommas": "all",
+      "arrowParentheses": "always",
+      "bracketSpacing": true,
+      "bracketSameLine": false,
+      "quoteProperties": "asNeeded"
     }
   },
   "linter": {
