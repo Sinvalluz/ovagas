@@ -1,6 +1,6 @@
 import type { NextRequest } from "next/server";
-import { RegisterUserRequestSchema } from "@/features/auth/server/dto/register-request-dto";
-import { registerUser } from "@/features/auth/server/services/auth-service";
+import { RegisterUserRequestSchema } from "@/server/dto/register-request-dto";
+import { registerUser } from "@/server/services/auth-service";
 
 export async function POST(request: NextRequest) {
 	const body = await request.json();
