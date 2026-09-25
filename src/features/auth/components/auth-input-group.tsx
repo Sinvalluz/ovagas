@@ -17,6 +17,7 @@ type AuthInputGroupProps<T extends FieldValues> = {
 
 export default function AuthInputGroup<T extends FieldValues>(props: AuthInputGroupProps<T>) {
 	const [showPassword, setShowPassword] = useState<boolean>(false);
+	const [value, setValue] = useState<string>("");
 	const isPassword = props.type === "password";
 	const inputType = isPassword && showPassword ? "text" : props.type;
 	const IconPassword = showPassword ? Eye : EyeOffIcon;
@@ -37,13 +38,16 @@ export default function AuthInputGroup<T extends FieldValues>(props: AuthInputGr
 							id={field.name}
 							aria-invalid={fieldState.invalid}
 							type={inputType}
+							value={value}
+							onChange={(e) => setValue(e.target.value)}
+							maxLength={props.maxLength}
 							autoComplete="on"
 							placeholder={props.placeholder}
 						/>
 						{isPassword && (
 							<InputGroupAddon align="inline-end">
 								<IconPassword
-									className="absolute top-1/2 -translate-y-1/2 right-3 cursor-pointer text-muted-foreground"
+									className="cursor-pointer text-muted-foreground bg-background"
 									width={18}
 									onClick={() => setShowPassword(!showPassword)}
 									onMouseDown={(e) => e.preventDefault()}
@@ -51,12 +55,19 @@ export default function AuthInputGroup<T extends FieldValues>(props: AuthInputGr
 							</InputGroupAddon>
 						)}
 					</InputGroup>
-					{fieldState.invalid && (
-						<FieldError
-							errors={[fieldState.error]}
-							className="transition-all"
-						/>
-					)}
+					<div className="flex justify-between items-center">
+						<div>
+							{fieldState.invalid && (
+								<FieldError
+									errors={[fieldState.error]}
+									className="transition-all"
+								/>
+							)}
+						</div>
+						<span className="text-xs text-muted-foreground">
+							{value.length}/{props.maxLength}
+						</span>
+					</div>
 				</Field>
 			)}
 		/>
