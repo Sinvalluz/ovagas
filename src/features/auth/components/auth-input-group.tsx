@@ -17,7 +17,6 @@ type AuthInputGroupProps<T extends FieldValues> = {
 
 export default function AuthInputGroup<T extends FieldValues>(props: AuthInputGroupProps<T>) {
 	const [showPassword, setShowPassword] = useState<boolean>(false);
-	const [value, setValue] = useState<string>("");
 	const isPassword = props.type === "password";
 	const inputType = isPassword && showPassword ? "text" : props.type;
 	const IconPassword = showPassword ? Eye : EyeOffIcon;
@@ -38,8 +37,6 @@ export default function AuthInputGroup<T extends FieldValues>(props: AuthInputGr
 							id={field.name}
 							aria-invalid={fieldState.invalid}
 							type={inputType}
-							value={value}
-							onChange={(e) => setValue(e.target.value)}
 							maxLength={props.maxLength}
 							autoComplete="on"
 							placeholder={props.placeholder}
@@ -65,7 +62,7 @@ export default function AuthInputGroup<T extends FieldValues>(props: AuthInputGr
 							)}
 						</div>
 						<span className="text-xs text-muted-foreground">
-							{value.length}/{props.maxLength}
+							{field.value.length}/{props.maxLength}
 						</span>
 					</div>
 				</Field>

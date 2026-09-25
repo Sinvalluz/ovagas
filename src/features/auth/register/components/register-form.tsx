@@ -1,11 +1,15 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useMutation } from "@tanstack/react-query";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import { FieldGroup } from "@/components/ui/field";
+import { Spinner } from "@/components/ui/spinner";
+import { toast } from "@/components/ui/toast";
 import AuthInputGroup from "../../components/auth-input-group";
+import registerRequest from "../services/register-request";
 import type RegisterFormData from "../types/register-form-data";
 import RegisterFormSchema from "../types/register-form-schema";
 
@@ -20,9 +24,18 @@ export default function RegisterForm() {
 		},
 	});
 
+	const registerMutation = useMutation({
+		mutationFn: registerRequest,
+		onSuccess: () => {
+			toast.add({
+				title: "Usuário criado com sucesso",
+			});
+		},
+	});
+
 	const onSubmit = (data: RegisterFormData) => {
+		registerMutation.mutate({ email: data.email, name: data.name, password: data.password });
 		reset();
-		console.log(data);
 	};
 	return (
 		<form
@@ -66,7 +79,7 @@ export default function RegisterForm() {
 					className={"w-full h-10"}
 					type="submit"
 				>
-					Criar conta
+					{registerMutation.isPending ? <Spinner /> : "Criar conta"}
 				</Button>
 				<div className="self-center space-x-2">
 					<span className="text-muted-foreground">Já tem uma conta?</span>
