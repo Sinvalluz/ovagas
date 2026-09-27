@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import RegisterForm from "@/features/auth/register/components/register-form";
+import RegisterForm from "@/features/register/components/register-form";
 
 export default function Register() {
 	return (
@@ -13,7 +13,7 @@ export default function Register() {
 						width={160}
 						height={100}
 						loading="eager"
-						className="text-foreground mb-8"
+						className="text-foreground mb-8 w-40 h-auto"
 					/>
 					<CardTitle className="text-4xl font-bold">Crie sua conta!</CardTitle>
 					<CardDescription className="text-lg">
