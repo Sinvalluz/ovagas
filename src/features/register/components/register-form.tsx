@@ -2,6 +2,7 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
+import type { AxiosError } from "axios";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
 import AuthInputGroup from "@/components/auth-input-group";
@@ -9,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import { FieldGroup } from "@/components/ui/field";
 import { Spinner } from "@/components/ui/spinner";
 import { toast } from "@/components/ui/toast";
+import type { ErrorResponse } from "@/types/error";
 import registerRequest from "../services/register-request";
 import type RegisterFormData from "../types/register-form-data";
 import RegisterFormSchema from "../types/register-form-schema";
@@ -26,7 +28,11 @@ export default function RegisterForm() {
 
 	const registerMutation = useMutation({
 		mutationFn: registerRequest,
+		onError: (error: AxiosError<ErrorResponse>) => {
+			toast.add({ type: "error", title: error.response?.data.error.message });
+		},
 		onSuccess: () => {
+			// Adicionar redirect depois
 			toast.add({
 				title: "Usuário criado com sucesso",
 			});

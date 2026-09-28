@@ -11,9 +11,9 @@ export default function Register() {
 						src={"/logo.svg"}
 						alt="Logo"
 						width={160}
-						height={100}
+						height={40}
 						loading="eager"
-						className="text-foreground mb-8 w-40 h-auto"
+						className="text-foreground mb-8 w-40 h-10"
 					/>
 					<CardTitle className="text-4xl font-bold">Crie sua conta!</CardTitle>
 					<CardDescription className="text-lg">
