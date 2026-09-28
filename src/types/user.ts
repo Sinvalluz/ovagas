@@ -10,4 +10,14 @@ type User = {
 	updatedAt: Date;
 };
 
+export type UserResponse = {
+	name: string;
+	id: string;
+	email: string;
+	role: Role;
+	imgUrl: string | null;
+	createdAt: Date;
+	updatedAt: Date;
+};
+
 export type { User };
