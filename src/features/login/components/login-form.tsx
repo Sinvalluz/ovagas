@@ -12,24 +12,21 @@ import { FieldGroup } from "@/components/ui/field";
 import { Spinner } from "@/components/ui/spinner";
 import { toast } from "@/components/ui/toast";
 import type { ErrorResponse } from "@/types/error-response";
-import registerRequest from "../services/register-request";
-import type RegisterFormData from "../types/register-form-data";
-import RegisterFormSchema from "../types/register-form-schema";
+import LoginRequest from "../services/login-request";
+import type { LoginFormData } from "../types/login-form-data";
+import { LoginFormSchema } from "../types/login-form-schema";
 
-export default function RegisterForm() {
+export default function LoginForm() {
 	const router = useRouter();
 	const { handleSubmit, control, reset } = useForm({
-		resolver: zodResolver(RegisterFormSchema),
+		resolver: zodResolver(LoginFormSchema),
 		defaultValues: {
-			name: "",
 			email: "",
 			password: "",
-			confirmPassword: "",
 		},
 	});
-
-	const registerMutation = useMutation({
-		mutationFn: registerRequest,
+	const loginMutation = useMutation({
+		mutationFn: LoginRequest,
 		onError: (error: AxiosError<ErrorResponse>) => {
 			toast.add({ type: "error", title: error.response?.data.error.message });
 		},
@@ -38,8 +35,8 @@ export default function RegisterForm() {
 		},
 	});
 
-	const onSubmit = (data: RegisterFormData) => {
-		registerMutation.mutate({ email: data.email, name: data.name, password: data.password });
+	const onSubmit = (data: LoginFormData) => {
+		loginMutation.mutate(data);
 		reset();
 	};
 	return (
@@ -48,14 +45,6 @@ export default function RegisterForm() {
 			className="flex flex-col"
 		>
 			<FieldGroup className="gap-3">
-				<AuthInputGroup
-					name="name"
-					label="Nome de usuário"
-					control={control}
-					type="text"
-					placeholder="Digite seu nome completo"
-					maxLength={100}
-				/>
 				<AuthInputGroup
 					name="email"
 					label="E-mail"
@@ -72,28 +61,21 @@ export default function RegisterForm() {
 					placeholder="Crie sua senha"
 					maxLength={100}
 				/>
-				<AuthInputGroup
-					name="confirmPassword"
-					label="Confirmar senha"
-					control={control}
-					type="password"
-					placeholder="Confirme a senha"
-					maxLength={100}
-				/>
+
 				<Button
 					className={"w-full h-10"}
 					type="submit"
 				>
-					{registerMutation.isPending ? <Spinner /> : "Criar conta"}
+					{loginMutation.isPending ? <Spinner /> : "Entrar"}
 				</Button>
 				<div className="self-center space-x-2">
-					<span className="text-muted-foreground">Já tem uma conta?</span>
+					<span className="text-muted-foreground">Não tem uma conta?</span>
 
 					<Link
-						href={"/login"}
+						href={"auth/login"}
 						className="text-primary font-bold hover:text-primary/80"
 					>
-						Entrar
+						Inscrever-se
 					</Link>
 				</div>
 			</FieldGroup>
