@@ -11,11 +11,17 @@ export async function getAuthenticatedUser() {
 		throw new UnauthorizedError("O Token de acesso não foi informado.");
 	}
 
-	const { data, error } = await supabase.auth.getUser(accessToken);
+	try {
+		const { data } = await supabase.auth.getUser(accessToken);
 
-	if (error || !data.user) {
+		if (!data.user) {
+			throw new UnauthorizedError("O token de acesso enviado é inválido.");
+		}
+
+		return data.user;
+	} catch (_error) {
+		cookieStore.delete("refresh_token");
+		cookieStore.delete("access_token");
 		throw new UnauthorizedError("O token de acesso enviado é inválido.");
 	}
-
-	return data.user;
 }

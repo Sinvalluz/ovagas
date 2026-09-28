@@ -4,6 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 import type { AxiosError } from "axios";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import AuthInputGroup from "@/components/auth-input-group";
 import { Button } from "@/components/ui/button";
@@ -16,6 +17,7 @@ import type RegisterFormData from "../types/register-form-data";
 import RegisterFormSchema from "../types/register-form-schema";
 
 export default function RegisterForm() {
+	const router = useRouter();
 	const { handleSubmit, control, reset } = useForm({
 		resolver: zodResolver(RegisterFormSchema),
 		defaultValues: {
@@ -32,10 +34,7 @@ export default function RegisterForm() {
 			toast.add({ type: "error", title: error.response?.data.error.message });
 		},
 		onSuccess: () => {
-			// Adicionar redirect depois
-			toast.add({
-				title: "Usuário criado com sucesso",
-			});
+			router.push("/");
 		},
 	});
 
