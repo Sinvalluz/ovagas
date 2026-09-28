@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import type { ErrorResponse } from "@/types/error-response";
 import { AppError } from "./app-error";
 
 export function apiError(error: unknown) {
@@ -16,7 +17,7 @@ export function apiError(error: unknown) {
 
 	console.error(error);
 
-	return NextResponse.json(
+	return NextResponse.json<ErrorResponse>(
 		{
 			error: {
 				code: "INTERNAL_ERROR",

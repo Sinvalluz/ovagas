@@ -1,9 +1,9 @@
 import { cookies } from "next/headers";
 import type { NextRequest } from "next/server";
+import { RegisterUserRequestSchema } from "@/app/api/(auth)/register/dto/register-request-dto";
+import registerService from "@/app/api/(auth)/register/register-service";
 import { env } from "@/config/env";
-import { RegisterUserRequestSchema } from "@/server/dto/register-request-dto";
-import { apiError } from "@/server/errors/api-error";
-import registerUser from "@/server/services/register-user-service";
+import { apiError } from "../../_errors/api-error";
 
 export async function POST(request: NextRequest) {
 	try {
@@ -16,7 +16,7 @@ export async function POST(request: NextRequest) {
 			return Response.json({ message: result.error }, { status: 400 });
 		}
 
-		const session = await registerUser(result.data);
+		const session = await registerService(result.data);
 
 		cookieStore.set("access_token", session.access_token, {
 			httpOnly: true,

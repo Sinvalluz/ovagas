@@ -10,7 +10,7 @@ import { Button } from "@/components/ui/button";
 import { FieldGroup } from "@/components/ui/field";
 import { Spinner } from "@/components/ui/spinner";
 import { toast } from "@/components/ui/toast";
-import type { ErrorResponse } from "@/types/error";
+import type { ErrorResponse } from "@/types/error-response";
 import registerRequest from "../services/register-request";
 import type RegisterFormData from "../types/register-form-data";
 import RegisterFormSchema from "../types/register-form-schema";
