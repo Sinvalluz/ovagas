@@ -1,10 +1,10 @@
 /** biome-ignore-all lint/style/noNonNullAssertion: <A regra de negocio do projeto é baseado em email onde sempre acontece um retorno de um usuário e uma sessão, pois não tem confirmação de e-mail> */
+import EmailIsAlreadyInUse from "@/app/api/_errors/email-is-already-in-use";
+import InternalServerError from "@/app/api/_errors/internal-server-error";
+import SupabaseAuthError from "@/app/api/_errors/supabase-auth-error";
+import { findByEmail } from "@/app/api/_repository/user-repository";
 import { prisma } from "@/lib/prisma";
 import { supabase } from "@/lib/supabase";
-import EmailIsAlreadyInUse from "../../_errors/email-is-already-in-use";
-import InternalServerError from "../../_errors/internal-server-error";
-import SupabaseAuthError from "../../_errors/supabase-auth-error";
-import { findByEmail } from "../../_repository/user-repository";
 import type { RegisterUserRequestDto } from "./dto/register-request-dto";
 
 export default async function registerService(registerUserRequestDto: RegisterUserRequestDto) {

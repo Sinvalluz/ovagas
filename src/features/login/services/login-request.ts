@@ -1,6 +1,7 @@
+import type { LoginRequestDto } from "@/app/api/(routes)/(auth)/login/dto/login-request-dto";
+import type { loginResponseDto } from "@/app/api/(routes)/(auth)/login/dto/login-response.dto";
 import { api } from "@/lib/api-client";
-import type { LoginRequest } from "../types/login-request";
 
-export default function loginRequest(data: LoginRequest) {
-	return api.post("/login", data);
+export default function loginRequest(data: LoginRequestDto) {
+	return api.post<loginResponseDto>("/login", data);
 }
