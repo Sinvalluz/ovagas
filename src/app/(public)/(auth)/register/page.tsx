@@ -4,7 +4,7 @@ import RegisterForm from "@/features/register/components/register-form";
 
 export default function Register() {
 	return (
-		<div className="flex h-full justify-center items-center p-2">
+		<div className="flex min-h-dvh justify-center items-center p-2">
 			<Card className="w-full max-w-md">
 				<CardHeader>
 					<Image

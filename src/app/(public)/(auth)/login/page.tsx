@@ -4,7 +4,7 @@ import LoginForm from "@/features/login/components/login-form";
 
 export default function Login() {
 	return (
-		<div className="flex h-full justify-center items-center p-2">
+		<div className="flex min-h-dvh justify-center items-center p-2">
 			<Card className="w-full max-w-md">
 				<CardHeader>
 					<Image

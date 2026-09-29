@@ -122,7 +122,7 @@
 		@apply border-border outline-ring/50;
 	}
 	body {
-		@apply bg-background text-foreground h-screen flex flex-col;
+		@apply bg-background text-foreground min-h-dvh flex flex-col;
 	}
 	html {
 		@apply font-sans;
