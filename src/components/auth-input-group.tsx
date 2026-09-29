@@ -31,7 +31,7 @@ export default function AuthInputGroup<T extends FieldValues>(props: AuthInputGr
 					data-invalid={fieldState.invalid}
 				>
 					<FieldLabel htmlFor={field.name}>{props.label}</FieldLabel>
-					<InputGroup>
+					<InputGroup className="h-14">
 						<InputGroupInput
 							{...field}
 							id={field.name}
@@ -40,6 +40,7 @@ export default function AuthInputGroup<T extends FieldValues>(props: AuthInputGr
 							maxLength={props.maxLength}
 							autoComplete="on"
 							placeholder={props.placeholder}
+							className="h-14"
 						/>
 						{isPassword && (
 							<InputGroupAddon align="inline-end">

@@ -81,7 +81,7 @@ export default function RegisterForm() {
 					maxLength={100}
 				/>
 				<Button
-					className={"w-full h-10"}
+					className={"w-full h-14"}
 					type="submit"
 				>
 					{registerMutation.isPending ? <Spinner /> : "Criar conta"}

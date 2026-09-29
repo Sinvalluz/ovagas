@@ -63,7 +63,7 @@ export default function LoginForm() {
 				/>
 
 				<Button
-					className={"w-full h-10"}
+					className={"w-full h-14"}
 					type="submit"
 				>
 					{loginMutation.isPending ? <Spinner /> : "Entrar"}
