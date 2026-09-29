@@ -11,7 +11,7 @@ export default function Home() {
 
 	useEffect(() => {
 		if (error) {
-			router.replace("/register");
+			router.replace("/login");
 		}
 	}, [error, router]);
 

@@ -20,6 +20,8 @@ export async function getAuthenticatedUser() {
 
 	if (error) {
 		if (error.code === "bad_jwt") {
+			cookieStore.delete("access_token");
+			cookieStore.delete("refresh_token");
 			throw new UnauthorizedError("O token de acesso enviado é inválido.");
 		}
 		throw new InternalServerError();

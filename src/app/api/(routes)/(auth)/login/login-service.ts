@@ -1,6 +1,6 @@
 /** biome-ignore-all lint/style/noNonNullAssertion: <A regra de negocio do projeto é baseado em email onde sempre acontece um retorno de um usuário e uma sessão, pois não tem confirmação de e-mail> */
+import InternalServerError from "@/app/api/_errors/internal-server-error";
 import InvalidCredentialsError from "@/app/api/_errors/invalid-credentials-error";
-import SupabaseAuthError from "@/app/api/_errors/supabase-auth-error";
 import { findByEmail } from "@/app/api/_repository/user-repository";
 import { supabase } from "@/lib/supabase";
 import type { LoginRequestDto } from "./dto/login-request-dto";
@@ -18,10 +18,12 @@ export default async function loginService(loginRequestDto: LoginRequestDto) {
 	});
 
 	if (error) {
-		if (error.status && error.code && error.message) {
-			throw new SupabaseAuthError(error.status, error.code, error.message);
+		if (error.code === "invalid_credentials") {
+			throw new InvalidCredentialsError();
 		}
+
+		throw new InternalServerError();
 	}
 
-	return data.session!;
+	return data.session;
 }

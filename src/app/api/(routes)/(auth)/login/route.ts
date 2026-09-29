@@ -19,6 +19,8 @@ export async function POST(request: NextRequest) {
 
 		const session = await loginService(result.data);
 
+		console.log(session);
+
 		cookieStore.set("access_token", session.access_token, {
 			httpOnly: true,
 			sameSite: "lax",
