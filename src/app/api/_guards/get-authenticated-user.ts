@@ -1,6 +1,7 @@
 /** biome-ignore-all lint/style/noNonNullAssertion: <A regra de negocio do projeto é baseado em email onde sempre acontece um retorno de um usuário e uma sessão, pois não tem confirmação de e-mail> */
 import { cookies } from "next/headers";
 import { supabase } from "@/lib/supabase";
+import InternalServerError from "../_errors/internal-server-error";
 import UnauthorizedError from "../_errors/unauthorized-error";
 
 export async function getAuthenticatedUser() {
@@ -11,17 +12,18 @@ export async function getAuthenticatedUser() {
 		throw new UnauthorizedError("O Token de acesso não foi informado.");
 	}
 
-	try {
-		const { data } = await supabase.auth.getUser(accessToken);
+	const { data, error } = await supabase.auth.getUser(accessToken);
 
-		if (!data.user) {
-			throw new UnauthorizedError("O token de acesso enviado é inválido.");
-		}
-
-		return data.user;
-	} catch (_error) {
-		cookieStore.delete("refresh_token");
-		cookieStore.delete("access_token");
+	if (!data) {
 		throw new UnauthorizedError("O token de acesso enviado é inválido.");
 	}
+
+	if (error) {
+		if (error.code === "bad_jwt") {
+			throw new UnauthorizedError("O token de acesso enviado é inválido.");
+		}
+		throw new InternalServerError();
+	}
+
+	return data.user;
 }
