@@ -16,7 +16,7 @@ const publicRoutes = [
 	},
 ] as const;
 
-const REDIRECT_WHEN_NOT_AUTHENTICATED_ROUTE = "/register";
+const REDIRECT_WHEN_NOT_AUTHENTICATED_ROUTE = "/login";
 
 export async function proxy(request: NextRequest) {
 	const path = request.nextUrl.pathname;

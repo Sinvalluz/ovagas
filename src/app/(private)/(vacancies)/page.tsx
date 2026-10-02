@@ -2,18 +2,19 @@
 
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
+import Header from "@/components/header";
 import { Spinner } from "@/components/ui/spinner";
 import useCurrentUser from "@/hooks/use-current-user";
 
 export default function Home() {
 	const router = useRouter();
-	const { isLoading, error, data: user } = useCurrentUser();
+	const { isLoading, isError, data: user } = useCurrentUser();
 
 	useEffect(() => {
-		if (error) {
+		if (isError) {
 			router.replace("/login");
 		}
-	}, [error, router]);
+	}, [isError, router]);
 
 	if (isLoading) {
 		return (
@@ -23,15 +24,14 @@ export default function Home() {
 		);
 	}
 
-	if (error) {
-		return null;
-	}
+	if (!user) return;
 
 	return (
-		<div>
-			<h1>Nome: {user?.data.name}</h1>
-			<h1>E-mail: {user?.data.email}</h1>
-			<h1>Id: {user?.data.id}</h1>
+		<div className="min-h-dvh">
+			<Header
+				username={user.name}
+				imgUrl={user.imgUrl}
+			/>
 		</div>
 	);
 }
