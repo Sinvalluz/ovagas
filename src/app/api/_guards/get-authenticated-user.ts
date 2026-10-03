@@ -12,9 +12,12 @@ export async function getAuthenticatedUser() {
 		throw new UnauthorizedError("O Token de acesso não foi informado.");
 	}
 
-	const { data, error } = await supabase.auth.getUser(accessToken);
+	const {
+		data: { user },
+		error,
+	} = await supabase.auth.getUser(accessToken);
 
-	if (!data) {
+	if (!user) {
 		throw new UnauthorizedError("O token de acesso enviado é inválido.");
 	}
 
@@ -27,5 +30,5 @@ export async function getAuthenticatedUser() {
 		throw new InternalServerError();
 	}
 
-	return data.user;
+	return user;
 }

@@ -24,7 +24,15 @@ export default async function registerService(registerUserRequestDto: RegisterUs
 		},
 	});
 
-	if (error) throw new SupabaseAuthError(error.status!, error.code!, error.message);
+	if (error) {
+		console.error("Falha na autenticação via Supabase", {
+			status: error.status,
+			code: error.code,
+			message: error.message,
+		});
+
+		throw new SupabaseAuthError();
+	}
 
 	const user = await prisma.user.create({
 		data: {
