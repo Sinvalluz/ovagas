@@ -15,6 +15,7 @@
 		"indentStyle": "tab",
 		"lineEnding": "crlf",
 		"indentWidth": 4,
+		"expand": "never",
 		"lineWidth": 120
 	},
 	"css": {
