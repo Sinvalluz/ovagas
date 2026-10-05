@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
-import Header from "@/components/header";
+import Header from "@/components/shared/header";
 import { Spinner } from "@/components/ui/spinner";
 import useCurrentUser from "@/hooks/use-current-user";
 

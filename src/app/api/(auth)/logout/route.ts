@@ -23,6 +23,9 @@ export async function GET() {
 			);
 		}
 
+		cookieStore.delete("access_token");
+		cookieStore.delete("refresh_token");
+
 		return NextResponse.json({ message: "Sessão removida com sucesso" }, { status: 200 });
 	} catch (_error) {
 		return NextResponse.json(
