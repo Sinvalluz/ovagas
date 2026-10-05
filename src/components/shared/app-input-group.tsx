@@ -6,7 +6,7 @@ import { type Control, Controller, type FieldValues, type Path } from "react-hoo
 import { Field, FieldError, FieldLabel } from "@/components/ui/field";
 import { InputGroup, InputGroupAddon, InputGroupInput } from "@/components/ui/input-group";
 
-type AuthInputGroupProps<T extends FieldValues> = {
+type AppInputGroupProps<T extends FieldValues> = {
 	name: Path<T>;
 	control: Control<T>;
 	maxLength: number;
@@ -15,7 +15,7 @@ type AuthInputGroupProps<T extends FieldValues> = {
 	type: React.HTMLInputTypeAttribute;
 };
 
-export default function AuthInputGroup<T extends FieldValues>(props: AuthInputGroupProps<T>) {
+export default function AppInputGroup<T extends FieldValues>(props: AppInputGroupProps<T>) {
 	const [showPassword, setShowPassword] = useState<boolean>(false);
 	const isPassword = props.type === "password";
 	const inputType = isPassword && showPassword ? "text" : props.type;

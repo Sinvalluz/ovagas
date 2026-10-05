@@ -1,8 +1,8 @@
 import Image from "next/image";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import LoginForm from "@/features/login/components/login-form";
+import RegisterForm from "@/features/auth/register/components/register-form";
 
-export default function Login() {
+export default function Register() {
 	return (
 		<div className="flex min-h-dvh justify-center items-center p-2">
 			<Card className="w-full max-w-md">
@@ -15,13 +15,13 @@ export default function Login() {
 						loading="eager"
 						className="text-foreground mb-8 w-40 h-10"
 					/>
-					<CardTitle className="text-4xl font-bold">Bem vindo de volta!</CardTitle>
+					<CardTitle className="text-4xl font-bold">Crie sua conta!</CardTitle>
 					<CardDescription className="text-lg">
-						Bem-vindo de volta! Por favor, insira seus dados.
+						Crie sua conta e gerencie suas vagas de emprego de forma simples e eficiente.
 					</CardDescription>
 				</CardHeader>
 				<CardContent>
-					<LoginForm />
+					<RegisterForm />
 				</CardContent>
 			</Card>
 		</div>

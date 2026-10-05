@@ -1,10 +1,7 @@
 import Image from "next/image";
-import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 
-type HeaderProps = {
-	username: string;
-	imgUrl: string | null;
-};
+type HeaderProps = { username: string; imgUrl: string | null };
 
 export default function Header({ username, imgUrl }: HeaderProps) {
 	return (

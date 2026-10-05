@@ -6,7 +6,7 @@ import type { AxiosError } from "axios";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
-import AuthInputGroup from "@/components/auth-input-group";
+import AppInputGroup from "@/components/shared/app-input-group";
 import { Button } from "@/components/ui/button";
 import { FieldGroup } from "@/components/ui/field";
 import { Spinner } from "@/components/ui/spinner";
@@ -20,10 +20,7 @@ export default function LoginForm() {
 	const router = useRouter();
 	const { handleSubmit, control, reset } = useForm({
 		resolver: zodResolver(LoginFormSchema),
-		defaultValues: {
-			email: "",
-			password: "",
-		},
+		defaultValues: { email: "", password: "" },
 	});
 	const loginMutation = useMutation({
 		mutationFn: LoginRequest,
@@ -45,7 +42,7 @@ export default function LoginForm() {
 			className="flex flex-col"
 		>
 			<FieldGroup className="gap-3">
-				<AuthInputGroup
+				<AppInputGroup
 					name="email"
 					label="E-mail"
 					control={control}
@@ -53,7 +50,7 @@ export default function LoginForm() {
 					placeholder="Digite seu e-mail completo"
 					maxLength={100}
 				/>
-				<AuthInputGroup
+				<AppInputGroup
 					name="password"
 					label="Senha"
 					control={control}
