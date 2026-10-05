@@ -69,7 +69,7 @@ export default function LoginForm() {
 					<span className="text-muted-foreground">Não tem uma conta?</span>
 
 					<Link
-						href={"auth/login"}
+						href={"/register"}
 						className="text-primary font-bold hover:text-primary/80"
 					>
 						Inscrever-se

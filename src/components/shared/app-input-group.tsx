@@ -1,5 +1,6 @@
 "use client";
 
+import { cn } from "cn";
 import { Eye, EyeOffIcon } from "lucide-react";
 import { useState } from "react";
 import { type Control, Controller, type FieldValues, type Path } from "react-hook-form";
@@ -40,7 +41,10 @@ export default function AppInputGroup<T extends FieldValues>(props: AppInputGrou
 							maxLength={props.maxLength}
 							autoComplete="on"
 							placeholder={props.placeholder}
-							className="h-14"
+							className={cn(
+								"bg-white [&:-webkit-autofill]:shadow-[0_0_0_1000px_white_inset] [&:-webkit-autofill]:[-webkit-text-fill-color:#111827]",
+								isPassword ? "rounded-l-md" : "rounded-md",
+							)}
 						/>
 						{isPassword && (
 							<InputGroupAddon align="inline-end">

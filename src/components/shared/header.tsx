@@ -44,7 +44,6 @@ export default function Header({ username, imgUrl }: HeaderProps) {
 							onClick={async () => {
 								await logout();
 								queryClient.clear();
-								router.replace("/login");
 								router.refresh();
 							}}
 						>
