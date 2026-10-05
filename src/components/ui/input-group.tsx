@@ -37,9 +37,7 @@ const inputGroupAddonVariants = cva(
 					"order-last w-full justify-start px-2.5 pb-2 group-has-[>input]/input-group:pb-2 [.border-t]:pt-2",
 			},
 		},
-		defaultVariants: {
-			align: "inline-start",
-		},
+		defaultVariants: { align: "inline-start" },
 	},
 );
 
@@ -74,9 +72,7 @@ const inputGroupButtonVariants = cva("flex items-center gap-2 text-sm shadow-non
 			"icon-sm": "size-8 p-0 has-[>svg]:p-0",
 		},
 	},
-	defaultVariants: {
-		size: "xs",
-	},
+	defaultVariants: { size: "xs" },
 });
 
 function InputGroupButton({
@@ -86,9 +82,7 @@ function InputGroupButton({
 	size = "xs",
 	...props
 }: Omit<React.ComponentProps<typeof Button>, "size" | "type"> &
-	VariantProps<typeof inputGroupButtonVariants> & {
-		type?: "button" | "submit" | "reset";
-	}) {
+	VariantProps<typeof inputGroupButtonVariants> & { type?: "button" | "submit" | "reset" }) {
 	return (
 		<Button
 			type={type}

@@ -4,20 +4,11 @@ import "./globals.css";
 import { Toaster } from "@/components/ui/toast";
 import Providers from "@/providers";
 
-const geistSans = Geist({
-	variable: "--font-geist-sans",
-	subsets: ["latin"],
-});
+const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
 
-const geistMono = Geist_Mono({
-	variable: "--font-geist-mono",
-	subsets: ["latin"],
-});
+const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
 
-export const metadata: Metadata = {
-	title: "Ovagas",
-	description: "Gerenciador de vagas",
-};
+export const metadata: Metadata = { title: "Ovagas", description: "Gerenciador de vagas" };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
 	return (

@@ -1,3 +1,1 @@
-export type loginResponseDto = {
-	message: string;
-};
+export type loginResponseDto = { message: string };

@@ -1,3 +1,1 @@
-export type RegisterUserResponseDto = {
-	message: string;
-};
+export type RegisterUserResponseDto = { message: string };

@@ -3,10 +3,6 @@ import { env } from "./src/config/env";
 
 export default defineConfig({
 	schema: "prisma/schema.prisma",
-	migrations: {
-		path: "prisma/migrations",
-	},
-	datasource: {
-		url: env.NEXT_PUBLIC_DIRECT_URL,
-	},
+	migrations: { path: "prisma/migrations" },
+	datasource: { url: env.NEXT_PUBLIC_DIRECT_URL },
 });

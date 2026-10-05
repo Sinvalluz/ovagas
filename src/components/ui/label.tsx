@@ -1,7 +1,8 @@
+/** biome-ignore-all lint/a11y/noLabelWithoutControl: <default config shadcn> */
 "use client";
 
-import * as React from "react";
 import { cn } from "cn";
+import type * as React from "react";
 
 function Label({ className, ...props }: React.ComponentProps<"label">) {
 	return (

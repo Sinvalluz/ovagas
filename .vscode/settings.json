@@ -1,9 +1,6 @@
 {
 	"editor.formatOnSave": true,
 	"editor.defaultFormatter": "biomejs.biome",
-	"editor.codeActionsOnSave": {
-		"source.organizeImports.biome": "always",
-		"source.fixAll.biome": "always"
-	},
+	"editor.codeActionsOnSave": { "source.organizeImports.biome": "always", "source.fixAll.biome": "always" },
 	"cSpell.words": ["Ovagas"]
 }

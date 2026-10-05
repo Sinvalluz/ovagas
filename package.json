@@ -6,8 +6,7 @@
 		"dev": "next dev -p 3001",
 		"build": "next build",
 		"start": "next start",
-		"lint": "biome check",
-		"format": "biome format --write",
+		"biome": "biome check --write",
 		"prepare": "husky"
 	},
 	"lint-staged": { "*": ["biome check --write "] },

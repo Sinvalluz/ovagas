@@ -2,18 +2,9 @@ import { cookies } from "next/headers";
 import { type NextRequest, NextResponse, type ProxyConfig } from "next/server";
 
 const publicRoutes = [
-	{
-		path: "/register",
-		whenAuthenticated: "redirect",
-	},
-	{
-		path: "/login",
-		whenAuthenticated: "redirect",
-	},
-	{
-		path: "/home",
-		whenAuthenticated: "next",
-	},
+	{ path: "/register", whenAuthenticated: "redirect" },
+	{ path: "/login", whenAuthenticated: "redirect" },
+	{ path: "/home", whenAuthenticated: "next" },
 ] as const;
 
 const REDIRECT_WHEN_NOT_AUTHENTICATED_ROUTE = "/login";

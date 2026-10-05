@@ -54,12 +54,7 @@ export async function POST(request: NextRequest) {
 
 		if (!session) {
 			return NextResponse.json(
-				{
-					error: {
-						code: "INTERNAL_ERROR",
-						message: "Erro ao tentar fazer o login",
-					},
-				},
+				{ error: { code: "INTERNAL_ERROR", message: "Erro ao tentar fazer o login" } },
 				{ status: 500 },
 			);
 		}
@@ -80,12 +75,7 @@ export async function POST(request: NextRequest) {
 		return NextResponse.json<loginResponseDto>({ message: "Usuário autenticado com sucesso" }, { status: 201 });
 	} catch (_error) {
 		return NextResponse.json(
-			{
-				error: {
-					code: "INTERNAL_ERROR",
-					message: "Erro ao tentar fazer o login",
-				},
-			},
+			{ error: { code: "INTERNAL_ERROR", message: "Erro ao tentar fazer o login" } },
 			{ status: 500 },
 		);
 	}
