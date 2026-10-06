@@ -1,5 +1,6 @@
 import z from "zod";
 import { pt } from "zod/locales";
+import "dotenv/config";
 
 z.config(pt());
 
@@ -18,7 +19,7 @@ const processEnv = {
 	NEXT_PUBLIC_PROJECT_URL: process.env.NEXT_PUBLIC_PROJECT_URL,
 	NEXT_PUBLIC_SECRET_KEY: process.env.NEXT_PUBLIC_SECRET_KEY,
 	NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL,
-	NEXT_PUBLIC_NODE_ENV: process.env.NODE_ENV,
+	NEXT_PUBLIC_NODE_ENV: process.env.NEXT_PUBLIC_NODE_ENV,
 };
 
 const parsedEnv = EnvSchema.safeParse(processEnv);

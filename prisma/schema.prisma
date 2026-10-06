@@ -12,14 +12,64 @@ enum Role {
   ADMIN
 }
 
+
 model User {
   id String @id @db.Uuid
   email String @unique
   name String
   role Role
   imgUrl String?
-  createdAt DateTime
-  updatedAt DateTime
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  board Board[]
 
   @@map("users")
+}
+
+enum StatusCategory {
+  TODO
+  IN_PROGRESS
+  DONE
+}
+
+model Board {
+  id String @id @default(uuid()) @db.Uuid
+  userId String @map("user_id") @db.Uuid
+  name String
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  column Column[]
+  
+
+   @@map("boards")
+   
+   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Column {
+  id String @id @default(uuid()) @db.Uuid
+  boardId String @map("board_id") @db.Uuid
+  name String
+  statusCategory StatusCategory @map("status_category")
+  position Int
+  color String
+  jobVacancies JobVacancies[]
+
+  @@map("columns")
+ 
+  board Board @relation(fields: [boardId], references: [id], onDelete: Cascade)
+}
+
+model JobVacancies {
+  id String @id @default(uuid()) @db.Uuid
+  columnId String @map("column_id") @db.Uuid
+  title String
+  urlOrEmail String @map("url_or_email")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("job_vacancies")
+  
+  column Column @relation(fields: [columnId], references: [id], onDelete: Cascade)
+
 }
