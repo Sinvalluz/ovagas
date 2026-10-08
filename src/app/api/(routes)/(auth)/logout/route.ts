@@ -1,5 +1,8 @@
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
+import { InternalServerError } from "@/app/api/_erros/internal-server-error";
+import { UnauthorizedError } from "@/app/api/_erros/unauthorized-error";
+import { handleError } from "@/app/api/_helpers/handle-error";
 import { supabase } from "@/lib/supabase";
 
 export async function GET() {
@@ -8,29 +11,20 @@ export async function GET() {
 		const accessToken = cookieStore.get("access_token")?.value;
 
 		if (!accessToken) {
-			return NextResponse.json(
-				{ error: { code: "UNAUTHORIZED", message: "O Token de acesso não foi informado." } },
-				{ status: 401 },
-			);
+			throw new UnauthorizedError("O Token de acesso não foi informado.");
 		}
 
 		const { error } = await supabase.auth.admin.signOut(accessToken, "global");
 
 		if (error) {
-			return NextResponse.json(
-				{ error: { code: "INTERNAL_ERROR", message: "Erro ao tentar encerrar sessão" } },
-				{ status: 500 },
-			);
+			throw new InternalServerError("Erro ao tentar encerrar sessão", "AUTH_PROVIDER_ERROR");
 		}
 
 		cookieStore.delete("access_token");
 		cookieStore.delete("refresh_token");
 
 		return NextResponse.json({ message: "Sessão removida com sucesso" }, { status: 200 });
-	} catch (_error) {
-		return NextResponse.json(
-			{ error: { code: "INTERNAL_ERROR", message: "Erro ao tentar encerrar sessão" } },
-			{ status: 500 },
-		);
+	} catch (error) {
+		return handleError(error, "Erro ao tentar encerrar sessão");
 	}
 }

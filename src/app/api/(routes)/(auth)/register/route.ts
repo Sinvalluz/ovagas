@@ -1,6 +1,10 @@
 import { cookies } from "next/headers";
 import { type NextRequest, NextResponse } from "next/server";
 import { RegisterUserRequestSchema } from "@/app/api/_dtos/register-dto";
+import { BadRequestError } from "@/app/api/_erros/bad-request-error";
+import { ConflictError } from "@/app/api/_erros/conflict-error";
+import { InternalServerError } from "@/app/api/_erros/internal-server-error";
+import { handleError } from "@/app/api/_helpers/handle-error";
 import { env } from "@/config/env";
 import { prisma } from "@/lib/prisma";
 import { supabase } from "@/lib/supabase";
@@ -10,26 +14,20 @@ export async function POST(request: NextRequest) {
 		const cookieStore = await cookies();
 		const body = await request.json();
 
-		const result = RegisterUserRequestSchema.safeParse(body);
+		const registerUserRequestValidation = RegisterUserRequestSchema.safeParse(body);
 
-		if (!result.success) {
-			return Response.json({ message: result.error }, { status: 400 });
+		if (!registerUserRequestValidation.success) {
+			throw new BadRequestError(registerUserRequestValidation.error.message, "VALIDATION");
 		}
 
-		const { email, name, password } = result.data;
+		const { email, name, password } = registerUserRequestValidation.data;
 
 		const findByEmail = await prisma.user.findUnique({ where: { email } });
 
 		if (findByEmail) {
-			return NextResponse.json(
-				{
-					error: {
-						code: "EMAIL_IS_ALREADY_IN_USE",
-						message:
-							"Este e-mail já está cadastrado. Tente usar outro e-mail ou faça login com este endereço.",
-					},
-				},
-				{ status: 409 },
+			throw new ConflictError(
+				"Este e-mail já está cadastrado. Tente usar outro e-mail ou faça login com este endereço.",
+				"EMAIL_ALREADY_IN_USE",
 			);
 		}
 
@@ -38,18 +36,8 @@ export async function POST(request: NextRequest) {
 			error,
 		} = await supabase.auth.signUp({ email, password, options: { data: { name } } });
 
-		if (error) {
-			return NextResponse.json(
-				{ error: { code: "INTERNAL_ERROR", message: "Erro ao tentar criar usuário" } },
-				{ status: 500 },
-			);
-		}
-
-		if (!session || !user || !user.email) {
-			return NextResponse.json(
-				{ error: { code: "INTERNAL_ERROR", message: "Erro ao tentar criar usuário" } },
-				{ status: 500 },
-			);
+		if (error || !session || !user || !user.email) {
+			throw new InternalServerError("Erro ao tentar criar usuário", "AUTH_PROVIDER_ERROR");
 		}
 
 		await prisma.user.create({
@@ -77,11 +65,8 @@ export async function POST(request: NextRequest) {
 			path: "/",
 		});
 
-		return Response.json({ message: "Usuário criado com sucesso" }, { status: 201 });
-	} catch (_error) {
-		return NextResponse.json(
-			{ error: { code: "INTERNAL_ERROR", message: "Erro ao tentar criar usuário" } },
-			{ status: 500 },
-		);
+		return NextResponse.json({ message: "Usuário criado com sucesso" }, { status: 201 });
+	} catch (error) {
+		return handleError(error, "Erro ao tentar criar usuário");
 	}
 }
