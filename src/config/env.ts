@@ -1,6 +1,5 @@
 import z from "zod";
 import { pt } from "zod/locales";
-import "dotenv/config";
 
 z.config(pt());
 

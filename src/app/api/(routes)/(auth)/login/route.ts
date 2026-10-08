@@ -1,68 +1,62 @@
 import { cookies } from "next/headers";
 import { type NextRequest, NextResponse } from "next/server";
+import { LoginRequestSchema, type loginResponseDto } from "@/app/api/_dtos/login-dto";
 import { env } from "@/config/env";
 import { prisma } from "@/lib/prisma";
 import { supabase } from "@/lib/supabase";
-import { RegisterUserRequestSchema } from "./dto/register-request-dto";
 
 export async function POST(request: NextRequest) {
 	try {
 		const cookieStore = await cookies();
 		const body = await request.json();
 
-		const result = RegisterUserRequestSchema.safeParse(body);
+		const result = LoginRequestSchema.safeParse(body);
 
 		if (!result.success) {
 			return Response.json({ message: result.error }, { status: 400 });
 		}
 
-		const { email, name, password } = result.data;
+		const { email, password } = result.data;
 
 		const findByEmail = await prisma.user.findUnique({ where: { email } });
 
-		if (findByEmail) {
+		if (!findByEmail) {
 			return NextResponse.json(
 				{
 					error: {
-						code: "EMAIL_IS_ALREADY_IN_USE",
-						message:
-							"Este e-mail já está cadastrado. Tente usar outro e-mail ou faça login com este endereço.",
+						code: "INVALID_CREDENTIALS",
+						message: "E-mail ou senha inválidos. Verifique suas credenciais e tente novamente.",
 					},
 				},
-				{ status: 409 },
+				{ status: 401 },
 			);
 		}
 
 		const {
-			data: { session, user },
+			data: { session },
 			error,
-		} = await supabase.auth.signUp({ email, password, options: { data: { name } } });
+		} = await supabase.auth.signInWithPassword({ email, password });
 
 		if (error) {
+			if (error.code === "invalid_credentials") {
+				return NextResponse.json(
+					{
+						error: {
+							code: "INVALID_CREDENTIALS",
+							message: "E-mail ou senha inválidos. Verifique suas credenciais e tente novamente.",
+						},
+					},
+					{ status: 401 },
+				);
+			}
+		}
+
+		if (!session) {
 			return NextResponse.json(
-				{ error: { code: "INTERNAL_ERROR", message: "Erro ao tentar criar usuário" } },
+				{ error: { code: "INTERNAL_ERROR", message: "Erro ao tentar fazer o login" } },
 				{ status: 500 },
 			);
 		}
-
-		if (!session || !user || !user.email) {
-			return NextResponse.json(
-				{ error: { code: "INTERNAL_ERROR", message: "Erro ao tentar criar usuário" } },
-				{ status: 500 },
-			);
-		}
-
-		await prisma.user.create({
-			data: {
-				id: user.id,
-				email: user.email,
-				name,
-				role: "USER",
-				imgUrl: null,
-				createdAt: new Date(),
-				updatedAt: new Date(),
-			},
-		});
 
 		cookieStore.set("access_token", session.access_token, {
 			httpOnly: true,
@@ -77,10 +71,10 @@ export async function POST(request: NextRequest) {
 			path: "/",
 		});
 
-		return Response.json({ message: "Usuário criado com sucesso" }, { status: 201 });
+		return NextResponse.json<loginResponseDto>({ message: "Usuário autenticado com sucesso" }, { status: 201 });
 	} catch (_error) {
 		return NextResponse.json(
-			{ error: { code: "INTERNAL_ERROR", message: "Erro ao tentar criar usuário" } },
+			{ error: { code: "INTERNAL_ERROR", message: "Erro ao tentar fazer o login" } },
 			{ status: 500 },
 		);
 	}

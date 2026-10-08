@@ -1,5 +1,4 @@
-import type { LoginRequestDto } from "@/app/api/(auth)/login/dto/login-request-dto";
-import type { loginResponseDto } from "@/app/api/(auth)/login/dto/login-response-dto";
+import type { LoginRequestDto, loginResponseDto } from "@/app/api/_dtos/login-dto";
 import { api } from "@/lib/api-client";
 
 export default function loginRequest(data: LoginRequestDto) {

@@ -18,3 +18,5 @@ export const RegisterUserRequestSchema = z.object({
 });
 
 export type RegisterUserRequestDto = z.infer<typeof RegisterUserRequestSchema>;
+
+export type RegisterUserResponseDto = { message: string };

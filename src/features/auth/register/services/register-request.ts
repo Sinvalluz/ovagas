@@ -1,5 +1,4 @@
-import type { RegisterUserRequestDto } from "@/app/api/(auth)/register/dto/register-request-dto";
-import type { RegisterUserResponseDto } from "@/app/api/(auth)/register/dto/register-response-dto";
+import type { RegisterUserRequestDto, RegisterUserResponseDto } from "@/app/api/_dtos/register-dto";
 import { api } from "@/lib/api-client";
 
 export default function registerRequest(data: RegisterUserRequestDto) {
