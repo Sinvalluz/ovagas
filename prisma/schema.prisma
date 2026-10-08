@@ -19,8 +19,8 @@ model User {
   name String
   role Role
   imgUrl String?
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
+  createdAt DateTime @map("created_at")
+  updatedAt DateTime @map("updated_at")
   board Board[]
 
   @@map("users")
@@ -36,8 +36,8 @@ model Board {
   id String @id @default(uuid()) @db.Uuid
   userId String @map("user_id") @db.Uuid
   name String
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
+  createdAt DateTime @map("created_at")
+  updatedAt DateTime @map("updated_at")
   column Column[]
   
 
@@ -65,8 +65,8 @@ model JobVacancies {
   columnId String @map("column_id") @db.Uuid
   title String
   urlOrEmail String @map("url_or_email")
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
+  createdAt DateTime @map("created_at")
+  updatedAt DateTime @map("updated_at")
 
   @@map("job_vacancies")
   

@@ -9,7 +9,7 @@
 		"biome": "biome check --write",
 		"prepare": "husky"
 	},
-	"lint-staged": { "*": ["biome check --write "] },
+	"lint-staged": { "*.{js,jsx,ts,tsx,json,jsonc,css}": ["biome check --write "] },
 	"dependencies": {
 		"@base-ui/react": "^1.8.0",
 		"@hookform/resolvers": "^5.9.1",
