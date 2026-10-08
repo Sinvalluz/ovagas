@@ -1,7 +1,7 @@
+import type { MeResponse } from "@/app/api/_dtos/me-dto";
 import { api } from "@/lib/api-client";
-import type { UserResponse } from "@/types/user";
 
 export default async function getUser() {
-	const userResponse = await api.get<UserResponse>("/me");
-	return userResponse.data;
+	const MeResponse = await api.get<MeResponse>("/me");
+	return MeResponse.data;
 }
