@@ -50,13 +50,13 @@ export async function POST(request: NextRequest) {
 		cookieStore.set("access_token", session.access_token, {
 			httpOnly: true,
 			sameSite: "lax",
-			secure: env.NEXT_PUBLIC_NODE_ENV === "production",
+			secure: env.NODE_ENV === "production",
 			path: "/",
 		});
 		cookieStore.set("refresh_token", session.refresh_token, {
 			httpOnly: true,
 			sameSite: "lax",
-			secure: env.NEXT_PUBLIC_NODE_ENV === "production",
+			secure: env.NODE_ENV === "production",
 			path: "/",
 		});
 
