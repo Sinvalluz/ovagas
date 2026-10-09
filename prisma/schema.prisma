@@ -44,6 +44,7 @@ model Board {
    @@map("boards")
    
    user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+   @@unique([name, userId])
 }
 
 model Column {
