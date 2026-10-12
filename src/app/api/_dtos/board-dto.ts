@@ -1,4 +1,5 @@
 import z from "zod";
+import type { Board } from "../../../../generated/prisma/browser";
 
 export const BoardRequestSchema = z.object({
 	name: z
@@ -8,4 +9,27 @@ export const BoardRequestSchema = z.object({
 		.max(100, "O nome deve conter menos de 100 caracteres"),
 });
 
-export type BoardResponse = { message: string };
+export const BoardParamsSchema = z.object({
+	page: z.coerce
+		.number("O parâmetro (page) deve ser um número")
+		.gt(0, "O número do parâmetro (page) para deve ser positivo")
+		.default(1),
+	limit: z.coerce
+		.number("O parâmetro (limit) deve ser um número")
+		.gt(0, "O número do parâmetro (limit) deve ser positivo")
+		.default(10),
+});
+
+export type PostBoardResponse = { message: string };
+
+export type GetBoardsResponse = {
+	boards: Omit<Board, "userId">[];
+	pagination: {
+		path: string;
+		page: number;
+		count: number;
+		previousPage: number | null;
+		nextPage: number | null;
+		lastPage: number;
+	};
+};
