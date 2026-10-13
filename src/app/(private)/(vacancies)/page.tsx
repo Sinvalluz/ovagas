@@ -24,7 +24,9 @@ export default function Home() {
 		);
 	}
 
-	if (!user) return;
+	if (isError || !user) {
+		return null;
+	}
 
 	return (
 		<div className="min-h-dvh">

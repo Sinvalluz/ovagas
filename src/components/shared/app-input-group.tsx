@@ -31,7 +31,12 @@ export default function AppInputGroup<T extends FieldValues>(props: AppInputGrou
 					className="w-full transition-all"
 					data-invalid={fieldState.invalid}
 				>
-					<FieldLabel htmlFor={field.name}>{props.label}</FieldLabel>
+					<FieldLabel
+						htmlFor={field.name}
+						className="text-base"
+					>
+						{props.label}
+					</FieldLabel>
 					<InputGroup className="h-14">
 						<InputGroupInput
 							{...field}
