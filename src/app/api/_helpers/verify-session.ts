@@ -17,7 +17,6 @@ export async function verifySession() {
 
 	if (error || !user) {
 		cookieStore.delete("access_token");
-		cookieStore.delete("refresh_token");
 		throw new UnauthorizedError("O token de acesso enviado é inválido.");
 	}
 
