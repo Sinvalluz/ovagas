@@ -33,3 +33,5 @@ export type GetBoardsResponse = {
 		lastPage: number;
 	};
 };
+
+export const BoardEditDeleteParamsSchema = z.uuid().min(1, "O id nos parâmetros é obrigatório.");
