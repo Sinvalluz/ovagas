@@ -51,7 +51,7 @@ export async function GET(request: NextRequest) {
 			throw new BadRequestError(boardParamsValidation.error.message, "VALIDATION");
 		}
 
-		const { page, limit } = boardParamsValidation.data;
+		let { page, limit } = boardParamsValidation.data;
 
 		const countBoards = await prisma.board.count({ where: { userId: user.id } });
 
@@ -75,7 +75,7 @@ export async function GET(request: NextRequest) {
 		}
 
 		if (page > lastPage) {
-			throw new BadRequestError("O número de paginas não está disponível no intervalo", "VALIDATION");
+			page = 1;
 		}
 
 		const boards = await prisma.board.findMany({
@@ -83,7 +83,7 @@ export async function GET(request: NextRequest) {
 			omit: { userId: true },
 			take: limit,
 			skip: page * limit - limit,
-			orderBy: { name: "asc" },
+			orderBy: { createdAt: "desc" },
 		});
 
 		return NextResponse.json<GetBoardsResponse>(

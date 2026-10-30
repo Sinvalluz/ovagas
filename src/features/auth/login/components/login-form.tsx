@@ -7,7 +7,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import AppInputGroup from "@/components/shared/app-input-group";
-import { Button } from "@/components/ui/button";
+import SubmitButton from "@/components/shared/submit-button";
 import { FieldGroup } from "@/components/ui/field";
 import { Spinner } from "@/components/ui/spinner";
 import { toast } from "@/components/ui/toast";
@@ -59,12 +59,7 @@ export default function LoginForm() {
 					maxLength={100}
 				/>
 
-				<Button
-					className={"w-full h-14"}
-					type="submit"
-				>
-					{loginMutation.isPending ? <Spinner /> : "Entrar"}
-				</Button>
+				<SubmitButton>{loginMutation.isPending ? <Spinner /> : "Entrar"}</SubmitButton>
 				<div className="self-center space-x-2">
 					<span className="text-muted-foreground">Não tem uma conta?</span>
 

@@ -27,6 +27,9 @@ export default function Pagination({ lastPage, page, setPage, previousPage, next
 		return [1, "...", page - 1, page, page + 1, "...", lastPage];
 	};
 
+	console.log(getPages());
+	console.log(page);
+
 	return (
 		<div className="flex p-1 gap-1">
 			<Button

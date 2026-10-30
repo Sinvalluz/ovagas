@@ -1,14 +1,14 @@
 "use client";
 
 import { cn } from "cn";
-import { Plus, Search, X } from "lucide-react";
+import { Search, X } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import Header from "@/components/shared/header";
 import Main from "@/components/shared/main";
-import { Button } from "@/components/ui/button";
 import { InputGroup, InputGroupAddon, InputGroupInput } from "@/components/ui/input-group";
 import { Spinner } from "@/components/ui/spinner";
+import AddNewBoardDialog from "@/features/boards/components/add-new-board-dialog";
 import DataBoardTable from "@/features/boards/components/data-table";
 import useCurrentUser from "@/hooks/use-current-user";
 
@@ -75,10 +75,7 @@ export default function Home() {
 								</InputGroupAddon>
 							)}
 						</InputGroup>
-						<Button className={"h-10 font-medium"}>
-							<Plus />
-							Adicionar novo Quadro
-						</Button>
+						<AddNewBoardDialog />
 					</div>
 				</div>
 

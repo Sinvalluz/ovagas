@@ -19,7 +19,7 @@ export default function DataBoardTable({ search }: DataBoardTableProps) {
 
 	const { data, isLoading } = useQuery({
 		queryKey: ["boards", { limit: limitRows, page }],
-		queryFn: async () => {
+		queryFn: () => {
 			return getBoards({ limit: limitRows, page });
 		},
 		retry: false,
@@ -73,7 +73,7 @@ export default function DataBoardTable({ search }: DataBoardTableProps) {
 							/>
 							<Pagination
 								setPage={setPage}
-								page={page}
+								page={data.pagination.page}
 								lastPage={data.pagination.lastPage}
 								previousPage={data.pagination.previousPage}
 								nextPage={data.pagination.nextPage}
