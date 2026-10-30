@@ -25,14 +25,16 @@ export async function POST(request: NextRequest) {
 		const { name } = boardRequestValidation.data;
 
 		const existsBoardByUserId = await prisma.board.findUnique({
-			where: { name_userId: { userId: user.id, name } },
+			where: { name_userId: { userId: user.id, name: name.toLowerCase() } },
 		});
 
 		if (existsBoardByUserId) {
 			throw new ConflictError("Este usuário já possui um quadro com esse nome", "BOARD_IS_ALREADY_IN_USE");
 		}
 
-		await prisma.board.create({ data: { name, userId: user.id, createdAt: new Date(), updatedAt: new Date() } });
+		await prisma.board.create({
+			data: { name: name.toLowerCase(), userId: user.id, createdAt: new Date(), updatedAt: new Date() },
+		});
 
 		return NextResponse.json<PostBoardResponse>({ message: "Quadro criado com sucesso." }, { status: 201 });
 	} catch (error) {

@@ -8,6 +8,7 @@ import {
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { TableCell, TableRow } from "@/components/ui/table";
+import { capitalizedWord } from "@/utils/capitalized-word";
 
 type DataRowsProps = { data: { name: string; id: string; userId: string; createdAt: string; updatedAt: string }[] };
 
@@ -17,7 +18,7 @@ export default function DataRows({ data }: DataRowsProps) {
 			key={board.id}
 			className="h-14"
 		>
-			<TableCell className="w-75">{board.name}</TableCell>
+			<TableCell className="w-75">{capitalizedWord(board.name)}</TableCell>
 			<TableCell>{new Date(board.updatedAt).toLocaleDateString("pt-BR")}</TableCell>
 			<TableCell>
 				<DropdownMenu>
