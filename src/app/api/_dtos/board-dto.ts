@@ -34,4 +34,13 @@ export type GetBoardsResponse = {
 	};
 };
 
-export const BoardEditDeleteParamsSchema = z.uuid().min(1, "O id nos parâmetros é obrigatório.");
+export const BoardDeleteParamsSchema = z.uuid().min(1, "O id nos parâmetros é obrigatório.");
+
+export const BoardEditRequestSchema = z.object({
+	id: z.uuid().min(1, "O id nos parâmetros é obrigatório."),
+	name: z
+		.string()
+		.min(1, "O nome é obrigatório.")
+		.min(3, "O nome deve conter mais de 3 caracteres")
+		.max(100, "O nome deve conter menos de 100 caracteres"),
+});
